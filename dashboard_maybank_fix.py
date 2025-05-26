@@ -720,7 +720,8 @@ def create_branch_breakdown(poi_analysis, traffic_summary, service_results, sele
         """, unsafe_allow_html=True)
     
     with col3:
-        dominant_service = branch_service['dominant_service'].replace('_', ' ').title()
+        # dominant_service = branch_service['dominant_service'].replace('_', ' ').title()
+        dominant_service = ', '.join(s.replace('_', ' ') for s in branch_service['dominant_service'])
         priority = branch_service['service_priority']
         st.markdown(f"""
         <div class="metric-card">
@@ -964,7 +965,14 @@ def generate_service_recommendations(service_results, poi_analysis, traffic_summ
         accessibility_score = branch_data['accessibility_score']
         
         # Service Specification Recommendations
-        recs.append(f"🎯 **PRIMARY FOCUS**: {dominant_service.replace('_', ' ').title()} Services ({service_priority} Priority)")
+        # recs.append(f"🎯 **PRIMARY FOCUS**: {dominant_service.replace('_', ' ').title()} Services ({service_priority} Priority)")
+        if isinstance(dominant_service, list):
+            formatted_dominant = ', '.join(s.replace('_', ' ') for s in dominant_service)
+        else:
+            formatted_dominant = dominant_service.replace('_', ' ')
+
+        recs.append(f"🎯 **PRIMARY FOCUS**: {formatted_dominant}")
+
         
         # Detailed service recommendations based on scores
         if industrial_score >= 0.6:
@@ -1867,8 +1875,15 @@ def main_dashboard():
                         card_class = "priority-low"
                         priority_icon = "📊"
                     
+                    # recommendations_text = "<br>".join([f"• {rec}" for rec in rec_data['recommendations']])
+                    # dominant_service = rec_data['dominant_service'].replace('_', ' ').title()
                     recommendations_text = "<br>".join([f"• {rec}" for rec in rec_data['recommendations']])
-                    dominant_service = rec_data['dominant_service'].replace('_', ' ').title()
+
+                    raw_dominant = rec_data['dominant_service']
+                    if isinstance(raw_dominant, list):
+                        dominant_service = ', '.join(s.replace('_', ' ') for s in raw_dominant)
+                    else:
+                        dominant_service = str(raw_dominant).replace('_', ' ')
                     
                     st.markdown(f"""
                     <div class="{card_class}">
