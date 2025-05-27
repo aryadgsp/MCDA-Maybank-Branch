@@ -1307,13 +1307,21 @@ def main_dashboard():
             
             display_cols = [
                 'rank', 'final_score', 'dominant_service', 'service_priority', 
-                'industrial_business_score', 'residential_consumer_score', 'youth_digital_score'
+                 'industrial_business_score', 'residential_consumer_score',
+                 'youth_digital_score', 'corporate_office_score',
+                 'wealthy_premium_score', 'education_student_score',
+                 'healthcare_insurance_score', 'competitor_threat_score',
+                 'accessibility_score', 'weighted_score'
             ]
             
             service_display = service_results[display_cols].round(3)
             service_display.columns = [
-                'Rank', 'Final Score', 'Dominant Service', 'Priority', 
-                'Industrial', 'Residential', 'Youth/Digital'
+                'Rank', 'Final Score', 'Dominant Service', 'Service Priority', 
+                 'Industrial Business Score', 'Residential Consumer Score',
+                 'Youth Digital Score', 'Corporate Office Score',
+                 'Wealthy Premium Score', 'Education Student Score',
+                 'Healthcare Insurance Score', 'Competitor Threat Score',
+                 'Accessibility Score', 'Weighted Score'
             ]
             
             st.dataframe(
@@ -1361,9 +1369,11 @@ def main_dashboard():
             st.markdown("#### 🔍 Service Category Analysis")
             
             service_cols = [
-                'industrial_business_score', 'residential_consumer_score', 'youth_digital_score',
-                'corporate_office_score', 'wealthy_premium_score', 'education_student_score',
-                'healthcare_insurance_score'
+                'industrial_business_score', 'residential_consumer_score',
+                 'youth_digital_score', 'corporate_office_score',
+                 'wealthy_premium_score', 'education_student_score',
+                 'healthcare_insurance_score', 'competitor_threat_score',
+                 'accessibility_score', 'weighted_score'
             ]
             
             service_matrix = service_results[service_cols].T
